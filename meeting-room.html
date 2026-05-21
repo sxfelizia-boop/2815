@@ -372,6 +372,9 @@ textarea.mi{resize:vertical;min-height:56px}
 </div>
 
 <script>
+// ── Firebase 配置 ──
+const FB_URL = 'https://project-2973656330509953817-default-rtdb.asia-southeast1.firebasedatabase.app';
+
 // ── 数据 ──
 const STOR = 'mr2815_v4';
 const USER_K = 'mr2815_user4';
@@ -408,9 +411,78 @@ function fmtD(ds){
 function fmtDate(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
 const $ = id => document.getElementById(id);
 
-function loadBks(){ try{ return JSON.parse(localStorage.getItem(STOR)||'[]'); }catch{ return []; } }
-function saveBk(bk){ const a=loadBks(); a.push(bk); localStorage.setItem(STOR, JSON.stringify(a)); }
-function removeBk(id){ localStorage.setItem(STOR, JSON.stringify(loadBks().filter(b=>b.id!==id))); }
+// ── Firebase REST helpers ──
+let _bksCache = []; // 本地缓存，SSE 实时更新
+let _sseSource = null;
+
+function fbPath(){ return FB_URL + '/bookings.json'; }
+
+async function fbLoad(){
+  try{
+    const r = await fetch(fbPath());
+    const data = await r.json();
+    if(!data){ _bksCache=[]; return []; }
+    _bksCache = Object.entries(data).map(([k,v])=>({...v, _fbKey:k}));
+    return _bksCache;
+  }catch(e){ console.warn('Firebase load failed, using cache', e); return _bksCache; }
+}
+
+async function saveBk(bk){
+  // 先乐观更新本地
+  _bksCache.push(bk);
+  try{
+    const r = await fetch(FB_URL+'/bookings.json', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(bk)
+    });
+    const res = await r.json();
+    // 用服务器返回的 key 更新缓存
+    const idx = _bksCache.findIndex(b=>b.id===bk.id);
+    if(idx>=0) _bksCache[idx]._fbKey = res.name;
+  }catch(e){ console.warn('Firebase save failed', e); }
+}
+
+async function removeBk(id){
+  const bk = _bksCache.find(b=>b.id===id);
+  _bksCache = _bksCache.filter(b=>b.id!==id);
+  if(bk && bk._fbKey){
+    try{ await fetch(FB_URL+'/bookings/'+bk._fbKey+'.json', {method:'DELETE'}); }
+    catch(e){ console.warn('Firebase delete failed', e); }
+  }
+}
+
+function loadBks(){ return _bksCache; }
+
+// SSE 实时监听
+function startSSE(){
+  if(_sseSource) _sseSource.close();
+  _sseSource = new EventSource(FB_URL+'/bookings.json');
+  _sseSource.addEventListener('put', e=>{
+    try{
+      const d = JSON.parse(e.data);
+      if(d.data===null){ _bksCache=[]; }
+      else{ _bksCache = Object.entries(d.data||{}).map(([k,v])=>({...v,_fbKey:k})); }
+      renderTimeline();
+      if(document.getElementById('tab-mine').style.display!=='none') renderMine();
+    }catch(err){}
+  });
+  _sseSource.addEventListener('patch', e=>{
+    try{
+      const d = JSON.parse(e.data);
+      Object.entries(d.data||{}).forEach(([k,v])=>{
+        if(v===null){ _bksCache=_bksCache.filter(b=>b._fbKey!==k); }
+        else{
+          const idx=_bksCache.findIndex(b=>b._fbKey===k);
+          if(idx>=0) _bksCache[idx]={...v,_fbKey:k};
+          else _bksCache.push({...v,_fbKey:k});
+        }
+      });
+      renderTimeline();
+      if(document.getElementById('tab-mine').style.display!=='none') renderMine();
+    }catch(err){}
+  });
+  _sseSource.onerror = ()=>{ setTimeout(startSSE, 5000); };
+}
+
 function getUser(){ return localStorage.getItem(USER_K)||''; }
 function setUser(n){ localStorage.setItem(USER_K, n); }
 
@@ -425,7 +497,7 @@ function toast(msg, type=''){
 }
 
 // ── 初始化 ──
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', async ()=>{
   const ni = $('nameInput');
   ni.value = getUser();
   updateAvatar();
@@ -435,7 +507,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   updateDateLabel();
   fillTimeSelects();
   renderHeader();
+
+  // 先从 Firebase 加载数据，再渲染
+  await fbLoad();
   renderTimeline();
+
+  // 启动实时监听
+  startSSE();
 
   if(!localStorage.getItem(NOTICE_K)) openM('noticeModal');
   $('noticeChk').addEventListener('change', e => { $('noticeBtn').disabled = !e.target.checked; });
@@ -642,7 +720,7 @@ function _doOpenBookModal(date, start, end){
 }
 
 // ── 提交预约 ──
-function doBook(){
+async function doBook(){
   const user = getUser();
   if(!user){ toast('请先填写姓名', 'err'); return; }
   const date = $('mDate').value;
@@ -658,9 +736,6 @@ function doBook(){
   if(all.find(b => b.date===date && overlaps(start,end,b.start,b.end))){
     toast('该时间段已被预定，请换时间', 'err'); return;
   }
-  if(all.find(b => b.booker===user && b.date===date && overlaps(start,end,b.start,b.end))){
-    toast('您在该时间段已有预约', 'err'); return;
-  }
 
   const bk = {
     id: Date.now().toString(36) + Math.random().toString(36).slice(2,5),
@@ -670,8 +745,9 @@ function doBook(){
     booker: user,
     createdAt: new Date().toISOString()
   };
-  saveBk(bk);
   closeM('bookModal');
+  toast('⏳ 提交中...', '');
+  await saveBk(bk);
   toast('✅ 预定成功！' + start + '–' + end, 'ok');
   renderTimeline();
 }
@@ -692,8 +768,8 @@ function confirmDel(id, afterCb){
   $('delFoot').innerHTML = `
     <button class="btn-ghost" onclick="closeM('delModal')">再想想</button>
     <button class="btn-danger" id="delConfBtn">确认取消</button>`;
-  $('delConfBtn').onclick = ()=>{
-    removeBk(id);
+  $('delConfBtn').onclick = async ()=>{
+    await removeBk(id);
     closeM('delModal');
     toast('预约已取消', 'ok');
     renderTimeline();
