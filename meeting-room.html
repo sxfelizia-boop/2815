@@ -22,9 +22,9 @@ input,select,textarea{font-family:inherit;font-size:inherit;outline:none}
 .nav-item.active{color:#0052d9;font-weight:600}
 .nav-item.active::after{content:'';position:absolute;bottom:0;left:12px;right:12px;height:2px;background:#0052d9;border-radius:1px}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.avatar{width:30px;height:30px;border-radius:50%;background:#0052d9;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0}
-.name-input{border:1px solid #d1d5db;border-radius:5px;padding:5px 9px;width:90px;font-size:12px;color:#333}
-.name-input:focus{border-color:#0052d9;box-shadow:0 0 0 2px rgba(0,82,217,.12)}
+.avatar{width:30px;height:30px;border-radius:50%;background:#0052d9;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;cursor:pointer;title:attr(title)}
+.name-display{font-size:12px;color:#374151;font-weight:500;cursor:pointer;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-bottom:1px dashed #d1d5db;padding-bottom:1px}
+.name-display:hover{color:#0052d9;border-color:#0052d9}
 
 /* ── Banner ── */
 .banner{background:linear-gradient(120deg,#e8f0fe 0%,#d4e6ff 100%);border-bottom:1px solid #c5d9f8;padding:14px 20px;display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
@@ -33,7 +33,6 @@ input,select,textarea{font-family:inherit;font-size:inherit;outline:none}
 .banner-rules li{font-size:12px;color:#555;line-height:1.9}
 .room-card{background:#fff;border-radius:10px;padding:14px 18px;min-width:160px;box-shadow:0 2px 10px rgba(0,82,217,.1);border:1px solid #d4e6ff;flex-shrink:0}
 .room-card-name{font-size:22px;font-weight:900;color:#0052d9;letter-spacing:.5px}
-.room-card-sub{font-size:12px;color:#888;margin-top:3px}
 .room-card-equip{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
 .etag{background:#f0f5ff;color:#3366cc;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:500}
 
@@ -48,7 +47,7 @@ input,select,textarea{font-family:inherit;font-size:inherit;outline:none}
 .today-btn:hover{border-color:#0052d9;color:#0052d9}
 #dateWeekLabel{font-size:12px;color:#999;margin-left:4px}
 
-/* ── 图례 ── */
+/* ── 图例 ── */
 .legend-bar{background:#fff;padding:7px 20px;display:flex;align-items:center;gap:18px;border-bottom:1px solid #eee;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#666}
 .ld{width:24px;height:13px;border-radius:3px}
@@ -60,31 +59,18 @@ input,select,textarea{font-family:inherit;font-size:inherit;outline:none}
 /* ── 时间轴主体 ── */
 .main-wrap{padding:16px 20px 48px}
 .section-title{font-size:14px;font-weight:700;color:#1e3a5f;margin-bottom:10px}
-
-/* 整个时间轴容器横向可滚动 */
 .tl-outer{background:#fff;border-radius:8px;border:1px solid #e0e4ea;overflow:hidden}
 .tl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-
-/* 表格布局：信息列固定 + 时间列固定宽 */
 .tl-table{border-collapse:collapse;table-layout:fixed}
-/* 信息列 */
-.tl-table .col-info{width:160px;min-width:160px;padding:0;border-right:1px solid #eee;vertical-align:middle}
-/* 每个时间格宽度 = 36px（30分钟），共24格 = 864px */
+.tl-table .col-info{width:80px;min-width:80px;padding:0;border-right:1px solid #eee;vertical-align:middle}
 .tl-table .col-slot{width:36px;min-width:36px;height:54px;padding:0;border-left:1px solid #f0f0f0;vertical-align:top}
-.tl-table .col-slot.half{border-left:1px dashed #f0f0f0}
-
-/* 表头行 */
-.tl-table thead .col-info{background:#fafafa;padding:9px 14px;font-size:12px;color:#888;font-weight:600}
-.tl-table thead .col-slot{background:#fafafa;text-align:center;font-size:11px;color:#bbb;padding:9px 0;vertical-align:middle}
-.tl-table thead .col-slot.hour-label{color:#888;font-weight:600}
-
-/* 信息格内容 */
-.info-cell{padding:12px 14px}
-.room-name{font-size:15px;font-weight:800;color:#0052d9}
-.room-sub{font-size:11px;color:#aaa;margin-top:2px}
+.tl-table thead .col-info{background:#fafafa;padding:9px 10px;font-size:12px;color:#888;font-weight:600}
+.tl-table thead .col-slot{background:#fafafa;text-align:center;font-size:10px;color:#888;font-weight:600;padding:9px 0;vertical-align:middle}
+.info-cell{padding:10px}
+.room-name{font-size:14px;font-weight:800;color:#0052d9}
 
 /* 时间格 */
-.slot{display:block;width:100%;height:54px;cursor:pointer;position:relative;transition:background .1s}
+.slot{display:block;width:100%;height:54px;cursor:pointer;position:relative;transition:background .1s;border:none;padding:0}
 .slot.free{background:#fff}
 .slot.free:hover{background:#c8e6c9}
 .slot.other{background:#e0e0e0;cursor:not-allowed}
@@ -92,7 +78,6 @@ input,select,textarea{font-family:inherit;font-size:inherit;outline:none}
 .slot.mine:hover{background:#90caf9}
 .slot.past{background:#bdbdbd;cursor:default}
 
-/* 预约标签（绝对定位，跨多格由JS控制宽度）*/
 .bk-bar{position:absolute;top:6px;bottom:6px;left:2px;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none;z-index:2}
 .bk-bar.mine-bar{background:#1565c0}
 .bk-bar.other-bar{background:#757575}
@@ -155,20 +140,21 @@ textarea.mi{resize:vertical;min-height:56px}
 
 .foot{text-align:center;padding:14px;font-size:11px;color:#d1d5db;border-top:1px solid #f3f4f6;background:#fff}
 
-/* ── 姓名引导浮窗 ── */
-.name-guide-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:600;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+/* ── 姓名登录浮窗 ── */
+.name-guide-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
 .name-guide-bg.open{opacity:1;pointer-events:auto}
-.name-guide{background:#fff;border-radius:12px;width:340px;max-width:92vw;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:28px 24px 22px;text-align:center;transform:translateY(-12px);transition:transform .2s}
+.name-guide{background:#fff;border-radius:14px;width:380px;max-width:94vw;box-shadow:0 16px 48px rgba(0,0,0,.2);padding:32px 28px 24px;text-align:center;transform:translateY(-12px);transition:transform .2s}
 .name-guide-bg.open .name-guide{transform:translateY(0)}
-.name-guide-icon{font-size:36px;margin-bottom:12px}
-.name-guide h3{font-size:16px;font-weight:700;color:#111827;margin-bottom:6px}
-.name-guide p{font-size:13px;color:#6b7280;margin-bottom:18px;line-height:1.6}
-/* 右上角输入框高亮动画 */
-@keyframes pulseInput{0%,100%{box-shadow:0 0 0 0 rgba(0,82,217,.5)}50%{box-shadow:0 0 0 5px rgba(0,82,217,.15)}}
-.name-input.highlight{border-color:#0052d9;animation:pulseInput 1s ease 2;background:#eff6ff}
-.name-guide-input{width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:9px 12px;font-size:15px;color:#111;margin-bottom:14px;text-align:center;transition:.15s}
+.name-guide-icon{font-size:40px;margin-bottom:12px}
+.name-guide h3{font-size:17px;font-weight:700;color:#111827;margin-bottom:8px}
+.name-guide-warn{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;text-align:left;line-height:1.8;margin-bottom:16px}
+.name-guide-warn strong{color:#c2410c}
+.name-guide-input{width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:10px 14px;font-size:15px;color:#111;margin-bottom:6px;text-align:center;transition:.15s}
 .name-guide-input:focus{border-color:#0052d9;box-shadow:0 0 0 3px rgba(0,82,217,.1);outline:none}
-.name-guide-hint{font-size:11px;color:#9ca3af;margin-top:-8px;margin-bottom:14px}
+.name-guide-input.err{border-color:#dc2626;background:#fff5f5}
+.name-guide-fmt{font-size:11px;color:#9ca3af;margin-bottom:16px;line-height:1.6}
+.name-guide-fmt code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:11px;color:#374151}
+@keyframes pulseInput{0%,100%{box-shadow:0 0 0 0 rgba(0,82,217,.5)}50%{box-shadow:0 0 0 5px rgba(0,82,217,.15)}}
 </style>
 </head>
 <body>
@@ -186,14 +172,13 @@ textarea.mi{resize:vertical;min-height:56px}
     <span class="nav-item" onclick="switchTab('mine')">我的预约</span>
   </div>
   <div class="nav-right">
-    <div class="avatar" id="avatarEl">我</div>
-    <input class="name-input" id="nameInput" type="text" placeholder="输入姓名" maxlength="12">
+    <div class="avatar" id="avatarEl" onclick="showNameGuide(false)" title="点击切换账号">我</div>
+    <span class="name-display" id="nameDisplay" onclick="showNameGuide(false)" style="display:none"></span>
   </div>
 </nav>
 
 <!-- ══ Tab 首页 ══ -->
 <div id="tab-book">
-
   <div class="banner">
     <div class="banner-rules">
       <h3>📋 使用须知</h3>
@@ -214,7 +199,6 @@ textarea.mi{resize:vertical;min-height:56px}
     </div>
   </div>
 
-  <!-- 日期筛选 -->
   <div class="filter-bar">
     <span class="filter-label">日期</span>
     <button class="date-arrow" onclick="shiftDate(-1)">‹</button>
@@ -224,7 +208,6 @@ textarea.mi{resize:vertical;min-height:56px}
     <span id="dateWeekLabel"></span>
   </div>
 
-  <!-- 图例 -->
   <div class="legend-bar">
     <div class="legend-item"><div class="ld ld-free"></div>可预定</div>
     <div class="legend-item"><div class="ld ld-other"></div>他人预定</div>
@@ -232,7 +215,6 @@ textarea.mi{resize:vertical;min-height:56px}
     <div class="legend-item"><div class="ld ld-past"></div>已过时段</div>
   </div>
 
-  <!-- 时间轴 -->
   <div class="main-wrap">
     <div class="section-title" id="tlTitle">2815 · 今日预约情况</div>
     <div class="tl-outer">
@@ -254,7 +236,7 @@ textarea.mi{resize:vertical;min-height:56px}
   <div class="my-panel">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
       <div style="font-size:15px;font-weight:700">我的预约</div>
-      <div style="font-size:12px;color:#aaa">仅显示本姓名下的预约</div>
+      <div style="font-size:12px;color:#aaa">仅显示当前账号下的预约</div>
     </div>
     <div class="my-table-wrap">
       <table class="my-table">
@@ -262,13 +244,13 @@ textarea.mi{resize:vertical;min-height:56px}
         <tbody id="myBody"></tbody>
       </table>
       <div class="empty" id="myEmpty" style="display:none">
-        暂无预约<br><small style="font-size:11px;color:#d1d5db">先在右上角填写姓名</small>
+        暂无预约<br><small style="font-size:11px;color:#d1d5db">请先登录企业微信账号</small>
       </div>
     </div>
   </div>
 </div>
 
-<div class="foot">2815 会议室预约 · 数据保存在本地浏览器</div>
+<div class="foot">2815 会议室预约 · 数据实时同步</div>
 
 <!-- ══ 弹窗：新建预约 ══ -->
 <div class="overlay" id="bookModal">
@@ -359,421 +341,399 @@ textarea.mi{resize:vertical;min-height:56px}
 
 <div class="toast" id="toast"></div>
 
-<!-- ══ 姓名引导浮窗 ══ -->
+<!-- ══ 姓名登录浮窗 ══ -->
 <div class="name-guide-bg" id="nameGuide">
   <div class="name-guide">
-    <div class="name-guide-icon">✏️</div>
-    <h3>先填写您的姓名</h3>
-    <p>预约信息会显示您的姓名，<br>方便他人了解会议安排</p>
-    <input class="name-guide-input" id="nameGuideInput" type="text" placeholder="请输入姓名" maxlength="12" autocomplete="off">
-    <div class="name-guide-hint">填写后将自动同步到右上角</div>
-    <button class="btn-primary" style="width:100%;padding:10px" onclick="confirmNameAndBook()">保存姓名</button>
+    <div class="name-guide-icon">👤</div>
+    <h3 id="nameGuideTitle">填写您的企业微信名称</h3>
+    <div class="name-guide-warn">
+      ⚠️ <strong>重要提示</strong>：请填写您的<strong>企业微信名称</strong>，格式必须为：<br>
+      <code>英文名(中文名)</code>，例如 <code>winstonqi(祁宁)</code><br>
+      该名称将作为您的<strong>唯一身份标识</strong>，用于管理您的预约。<br>
+      换设备或重新登录时，填写相同名称即可找回所有预约。
+    </div>
+    <input class="name-guide-input" id="nameGuideInput" type="text" placeholder="如：winstonqi(祁宁)" maxlength="40" autocomplete="off">
+    <div class="name-guide-fmt" id="nameGuideFmt">格式：英文名(中文名) &nbsp;·&nbsp; 括号内为中文姓名</div>
+    <button class="btn-primary" style="width:100%;padding:11px;font-size:14px" onclick="confirmName()">确认登录</button>
   </div>
 </div>
 
 <script>
-// ── Firebase 配置 ──
+// ── Firebase ──
 const FB_URL = 'https://project-2973656330509953817-default-rtdb.asia-southeast1.firebasedatabase.app';
 
-// ── 数据 ──
-const STOR = 'mr2815_v4';
-const USER_K = 'mr2815_user4';
+// ── 常量 ──
+const USER_K   = 'mr2815_user5';
 const NOTICE_K = 'mr2815_notice4';
-const WEEKS = ['日','一','二','三','四','五','六'];
+const WEEKS    = ['日','一','二','三','四','五','六'];
 
-// 时间槽：09:00 ~ 21:00，每 30 分钟，共 24 个区间
+// 时间槽 09:00–21:00，每 30 分钟
 const SLOTS = [];
 for(let h = 9; h <= 21; h++){
   for(let m = 0; m < 60; m += 30){
     if(h === 21 && m > 0) break;
-    SLOTS.push(p2(h) + ':' + p2(m));
+    SLOTS.push(p2(h)+':'+p2(m));
   }
 }
-// SLOTS[0]='09:00' ... SLOTS[24]='21:00'
-// 可点击区间 = SLOTS[0..23]，共 24 格
 
 function p2(n){ return String(n).padStart(2,'0'); }
-function pad(n){ return p2(n); }
-function todayStr(){
-  const d = new Date();
-  return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
-}
-function nowHHMM(){
-  const d = new Date();
-  return p2(d.getHours())+':'+p2(d.getMinutes());
-}
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+function nowHHMM(){ const d=new Date(); return p2(d.getHours())+':'+p2(d.getMinutes()); }
 function sm(s){ const[h,m]=s.split(':').map(Number); return h*60+m; }
-function overlaps(s1,e1,s2,e2){ return s1 < e2 && e1 > s2; }
-function fmtD(ds){
-  const d = new Date(ds + 'T00:00:00');
-  return (d.getMonth()+1)+'月'+d.getDate()+'日 周'+WEEKS[d.getDay()];
-}
+function overlaps(s1,e1,s2,e2){ return s1<e2 && e1>s2; }
+function fmtD(ds){ const d=new Date(ds+'T00:00:00'); return (d.getMonth()+1)+'月'+d.getDate()+'日 周'+WEEKS[d.getDay()]; }
 function fmtDate(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
 const $ = id => document.getElementById(id);
 
-// ── Firebase REST helpers ──
-let _bksCache = []; // 本地缓存，SSE 实时更新
-let _sseSource = null;
+// ── 用户名格式校验：英文字母/数字(任意中文) ──
+function validName(n){
+  return /^[a-zA-Z0-9]+\(.+\)$/.test(n.trim());
+}
 
-function fbPath(){ return FB_URL + '/bookings.json'; }
+// ── 用户 ──
+function getUser(){ return localStorage.getItem(USER_K)||''; }
+function setUser(n){ localStorage.setItem(USER_K, n.trim()); }
+
+// ── Firebase 数据 ──
+let _bks = []; // 内存缓存
 
 async function fbLoad(){
   try{
-    const r = await fetch(fbPath());
+    const r = await fetch(FB_URL+'/bookings.json');
     const data = await r.json();
-    if(!data){ _bksCache=[]; return []; }
-    _bksCache = Object.entries(data).map(([k,v])=>({...v, _fbKey:k}));
-    return _bksCache;
-  }catch(e){ console.warn('Firebase load failed, using cache', e); return _bksCache; }
+    const remote = data ? Object.entries(data).map(([k,v])=>({...v,_fbKey:k})) : [];
+    // 保留本地已创建但 Firebase 还未返回 key 的临时条目（_fbKey 为空）
+    const pending = _bks.filter(b=>!b._fbKey);
+    // 用 remote 作为基础，再把 pending 中 remote 里还没有的补进来
+    const remoteIds = new Set(remote.map(b=>b.id));
+    _bks = [...remote, ...pending.filter(b=>!remoteIds.has(b.id))];
+  }catch(e){ console.warn('fbLoad error',e); }
 }
 
-async function saveBk(bk){
-  // 先乐观更新本地
-  _bksCache.push(bk);
-  try{
-    const r = await fetch(FB_URL+'/bookings.json', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(bk)
-    });
-    const res = await r.json();
-    // 用服务器返回的 key 更新缓存
-    const idx = _bksCache.findIndex(b=>b.id===bk.id);
-    if(idx>=0) _bksCache[idx]._fbKey = res.name;
-  }catch(e){ console.warn('Firebase save failed', e); }
+function fbSave(bk){
+  fetch(FB_URL+'/bookings.json',{
+    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(bk)
+  }).then(r=>r.json()).then(res=>{
+    const i=_bks.findIndex(b=>b.id===bk.id);
+    if(i>=0) _bks[i]._fbKey=res.name;
+  }).catch(e=>console.warn('fbSave error',e));
 }
 
-async function removeBk(id){
-  const bk = _bksCache.find(b=>b.id===id);
-  _bksCache = _bksCache.filter(b=>b.id!==id);
-  if(bk && bk._fbKey){
-    try{ await fetch(FB_URL+'/bookings/'+bk._fbKey+'.json', {method:'DELETE'}); }
-    catch(e){ console.warn('Firebase delete failed', e); }
-  }
+function fbDel(fbKey){
+  if(!fbKey) return;
+  fetch(FB_URL+'/bookings/'+fbKey+'.json',{method:'DELETE'})
+    .catch(e=>console.warn('fbDel error',e));
 }
 
-function loadBks(){ return _bksCache; }
-
-// SSE 实时监听
-function startSSE(){
-  if(_sseSource) _sseSource.close();
-  _sseSource = new EventSource(FB_URL+'/bookings.json');
-  _sseSource.addEventListener('put', e=>{
-    try{
-      const d = JSON.parse(e.data);
-      if(d.data===null){ _bksCache=[]; }
-      else{ _bksCache = Object.entries(d.data||{}).map(([k,v])=>({...v,_fbKey:k})); }
+// 轮询：每 3 秒同步一次，有变化才重新渲染
+let _pollTimer = null;
+function startPoll(){
+  if(_pollTimer) clearInterval(_pollTimer);
+  _pollTimer = setInterval(async ()=>{
+    const before = _bks.map(b=>b.id+b.booker).sort().join();
+    await fbLoad();
+    const after = _bks.map(b=>b.id+b.booker).sort().join();
+    if(before !== after){
       renderTimeline();
-      if(document.getElementById('tab-mine').style.display!=='none') renderMine();
-    }catch(err){}
-  });
-  _sseSource.addEventListener('patch', e=>{
-    try{
-      const d = JSON.parse(e.data);
-      Object.entries(d.data||{}).forEach(([k,v])=>{
-        if(v===null){ _bksCache=_bksCache.filter(b=>b._fbKey!==k); }
-        else{
-          const idx=_bksCache.findIndex(b=>b._fbKey===k);
-          if(idx>=0) _bksCache[idx]={...v,_fbKey:k};
-          else _bksCache.push({...v,_fbKey:k});
-        }
-      });
+      if($('tab-mine').style.display!=='none') renderMine();
+    }
+  }, 3000);
+  // 切回前台立即刷新
+  document.addEventListener('visibilitychange', async ()=>{
+    if(document.visibilityState==='visible'){
+      await fbLoad();
       renderTimeline();
-      if(document.getElementById('tab-mine').style.display!=='none') renderMine();
-    }catch(err){}
+      if($('tab-mine').style.display!=='none') renderMine();
+    }
   });
-  _sseSource.onerror = ()=>{ setTimeout(startSSE, 5000); };
 }
 
-function getUser(){ return localStorage.getItem(USER_K)||''; }
-function setUser(n){ localStorage.setItem(USER_K, n); }
-
+// ── 工具 ──
 function openM(id){ $(id).classList.add('open'); }
 function closeM(id){ $(id).classList.remove('open'); }
 function toast(msg, type=''){
-  const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (type ? ' '+type : '');
+  const t=$('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
   clearTimeout(t._t);
-  t._t = setTimeout(()=>{ t.className='toast'; }, 2800);
+  t._t=setTimeout(()=>{ t.className='toast'; },2800);
 }
 
 // ── 初始化 ──
 document.addEventListener('DOMContentLoaded', async ()=>{
-  const ni = $('nameInput');
-  ni.value = getUser();
-  updateAvatar();
-  ni.addEventListener('input', ()=>{ setUser(ni.value); updateAvatar(); renderTimeline(); });
-
   $('datePicker').value = todayStr();
   updateDateLabel();
   fillTimeSelects();
   renderHeader();
 
-  // 先从 Firebase 加载数据，再渲染
+  // 先拉数据再渲染
   await fbLoad();
   renderTimeline();
+  startPoll();
 
-  // 启动实时监听
-  startSSE();
+  updateNavUser();
 
   if(!localStorage.getItem(NOTICE_K)) openM('noticeModal');
-  $('noticeChk').addEventListener('change', e => { $('noticeBtn').disabled = !e.target.checked; });
+  $('noticeChk').addEventListener('change', e=>{ $('noticeBtn').disabled=!e.target.checked; });
 
-  // 扫码到场
-  if(new URLSearchParams(location.search).get('walkin') === '1') showWalkIn();
+  if(new URLSearchParams(location.search).get('walkin')==='1') showWalkIn();
 });
 
-function updateAvatar(){
-  const n = getUser();
-  $('avatarEl').textContent = n ? n[0].toUpperCase() : '我';
+// ── 导航用户显示 ──
+function updateNavUser(){
+  const u = getUser();
+  if(u){
+    $('avatarEl').textContent = u[0].toUpperCase();
+    $('nameDisplay').textContent = u;
+    $('nameDisplay').style.display = 'block';
+    $('avatarEl').title = '点击切换账号';
+  } else {
+    $('avatarEl').textContent = '我';
+    $('nameDisplay').style.display = 'none';
+  }
 }
+
+// ── 姓名浮窗 ──
+let _afterLogin = null; // 登录后的回调
+
+function showNameGuide(required, cb){
+  _afterLogin = cb || null;
+  $('nameGuideInput').value = getUser();
+  $('nameGuideInput').classList.remove('err');
+  $('nameGuideFmt').style.color = '#9ca3af';
+  if(required){
+    $('nameGuideTitle').textContent = '填写您的企业微信名称';
+  } else {
+    $('nameGuideTitle').textContent = getUser() ? '切换账号' : '填写您的企业微信名称';
+  }
+  openM('nameGuide');
+  setTimeout(()=>$('nameGuideInput').focus(), 200);
+}
+
+function confirmName(){
+  const n = $('nameGuideInput').value.trim();
+  if(!n){
+    $('nameGuideInput').classList.add('err');
+    $('nameGuideFmt').style.color='#dc2626';
+    $('nameGuideFmt').textContent='请输入名称';
+    $('nameGuideInput').focus(); return;
+  }
+  if(!validName(n)){
+    $('nameGuideInput').classList.add('err');
+    $('nameGuideFmt').style.color='#dc2626';
+    $('nameGuideFmt').textContent='格式不对！必须是：英文名(中文名)，如 winstonqi(祁宁)';
+    $('nameGuideInput').focus(); return;
+  }
+  setUser(n);
+  closeM('nameGuide');
+  updateNavUser();
+  renderTimeline();
+  toast('✅ 已登录：'+n, 'ok');
+  if(_afterLogin){ const cb=_afterLogin; _afterLogin=null; setTimeout(cb,100); }
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && $('nameGuide').classList.contains('open')) confirmName();
+});
+
+// ── 须知 ──
 function dismissNotice(){
-  localStorage.setItem(NOTICE_K, '1');
+  localStorage.setItem(NOTICE_K,'1');
   closeM('noticeModal');
 }
 
 // ── Tab ──
 function switchTab(t){
-  $('tab-book').style.display = t==='book' ? '' : 'none';
-  $('tab-mine').style.display = t==='mine' ? '' : 'none';
+  $('tab-book').style.display = t==='book'?'':'none';
+  $('tab-mine').style.display = t==='mine'?'':'none';
   document.querySelectorAll('.nav-item').forEach((el,i)=>{
-    el.classList.toggle('active', (t==='book'&&i===0)||(t==='mine'&&i===1));
+    el.classList.toggle('active',(t==='book'&&i===0)||(t==='mine'&&i===1));
   });
   if(t==='mine') renderMine();
 }
 
 // ── 日期 ──
 function shiftDate(d){
-  const p = $('datePicker');
-  const dt = new Date(p.value + 'T00:00:00');
-  dt.setDate(dt.getDate() + d);
-  p.value = fmtDate(dt);
+  const p=$('datePicker');
+  const dt=new Date(p.value+'T00:00:00');
+  dt.setDate(dt.getDate()+d);
+  p.value=fmtDate(dt);
   updateDateLabel(); renderTimeline();
 }
-function setToday(){
-  $('datePicker').value = todayStr();
-  updateDateLabel(); renderTimeline();
-}
-function updateDateLabel(){
-  $('dateWeekLabel').textContent = fmtD($('datePicker').value);
-}
+function setToday(){ $('datePicker').value=todayStr(); updateDateLabel(); renderTimeline(); }
+function updateDateLabel(){ $('dateWeekLabel').textContent=fmtD($('datePicker').value); }
 
-// ── 时间轴表头 ──
+// ── 表头 ──
 function renderHeader(){
-  // 表头：信息列 + 每小时两格（整点显示小时，半点空白）
-  const tr = document.createElement('tr');
-  // 信息列
-  const th0 = document.createElement('th');
-  th0.className = 'col-info';
-  th0.textContent = '会议室';
+  const tr=document.createElement('tr');
+  const th0=document.createElement('th');
+  th0.className='col-info';
+  th0.textContent='会议室';
   tr.appendChild(th0);
-
-  for(let i = 0; i < SLOTS.length - 1; i++){
-    const th = document.createElement('th');
-    th.className = 'col-slot' + (i%2===1?' half':'');
-    if(i%2===0){
-      th.classList.add('hour-label');
-      th.textContent = SLOTS[i].split(':')[0];
-    } else {
-      th.textContent = '';
-    }
+  for(let i=0;i<SLOTS.length-1;i++){
+    const th=document.createElement('th');
+    th.className='col-slot';
+    const[hh,mm]=SLOTS[i].split(':');
+    th.textContent=mm==='00'?hh+':00':'';
     tr.appendChild(th);
   }
-  $('tlHead').innerHTML = '';
+  $('tlHead').innerHTML='';
   $('tlHead').appendChild(tr);
 }
 
-// ── 时间轴主体 ──
+// ── 时间轴渲染 ──
 function renderTimeline(){
   updateDateLabel();
-  const date = $('datePicker').value;
-  const isToday = date === todayStr();
-  // 只对今天过去的格子显示 past；其他日期全部可预定/按预约状态显示
-  const nowMin = isToday ? sm(nowHHMM()) : -1;
-  const user = getUser();
-  const bks = loadBks().filter(b => b.date === date);
+  const date=$('datePicker').value;
+  const isToday=date===todayStr();
+  const nowMin=isToday?sm(nowHHMM()):-1;
+  const user=getUser();
+  const bks=_bks.filter(b=>b.date===date);
 
-  $('tlTitle').textContent = '2815 · ' + fmtD(date) + ' 预约情况';
+  $('tlTitle').textContent='2815 · '+fmtD(date)+' 预约情况';
 
-  const tbody = $('tlBody');
-  tbody.innerHTML = '';
+  const tbody=$('tlBody');
+  tbody.innerHTML='';
+  const tr=document.createElement('tr');
 
-  const tr = document.createElement('tr');
-
-  // 信息格
-  const tdInfo = document.createElement('td');
-  tdInfo.className = 'col-info';
-  tdInfo.innerHTML = '<div class="info-cell"><div class="room-name">2815</div></div>';
+  const tdInfo=document.createElement('td');
+  tdInfo.className='col-info';
+  tdInfo.innerHTML='<div class="info-cell"><div class="room-name">2815</div></div>';
   tr.appendChild(tdInfo);
 
-  // 时间格
-  for(let i = 0; i < SLOTS.length - 1; i++){
-    const slotS = SLOTS[i];
-    const slotE = SLOTS[i+1];
-    const eMin = sm(slotE);
+  for(let i=0;i<SLOTS.length-1;i++){
+    const slotS=SLOTS[i], slotE=SLOTS[i+1];
+    const eMin=sm(slotE);
+    const td=document.createElement('td');
+    td.className='col-slot';
+    td.style.position='relative';
 
-    const td = document.createElement('td');
-    td.className = 'col-slot' + (i%2===1?' half':'');
-    td.style.position = 'relative'; // 让 bk-bar 相对此格定位
+    const btn=document.createElement('button');
+    btn.className='slot';
 
-    const btn = document.createElement('button');
-    btn.className = 'slot';
-    btn.style.cssText = 'display:block;width:100%;height:54px;border:none;padding:0;cursor:pointer;position:relative';
-
-    const bk = bks.find(b => overlaps(slotS, slotE, b.start, b.end));
-    const isPast = isToday && eMin <= nowMin;
+    const bk=bks.find(b=>overlaps(slotS,slotE,b.start,b.end));
+    const isPast=isToday&&eMin<=nowMin;
 
     if(isPast){
-      btn.className = 'slot past';
-      btn.disabled = true;
-      btn.title = '已过';
+      btn.className='slot past';
+      btn.disabled=true;
     } else if(bk){
-      const isMe = bk.booker === user;
-      btn.className = 'slot ' + (isMe ? 'mine' : 'other');
-      if(!isMe) btn.disabled = true;
-      btn.title = isMe
-        ? `【本人】${bk.title} (${bk.start}–${bk.end})  点击取消`
-        : `【${bk.booker||'他人'}】${bk.title} (${bk.start}–${bk.end})`;
-
-      // 只在起始格画标签
-      if(bk.start === slotS){
-        const slotCount = (sm(bk.end) - sm(bk.start)) / 30;
-        const bar = document.createElement('div');
-        bar.className = 'bk-bar ' + (isMe ? 'mine-bar' : 'other-bar');
-        // 宽度 = slotCount 格 * 36px - 4px margin
-        bar.style.cssText = `width:${slotCount*36 - 4}px;left:2px;top:6px;bottom:6px;position:absolute`;
-        bar.textContent = bk.title;
+      const isMe=bk.booker===user;
+      btn.className='slot '+(isMe?'mine':'other');
+      if(!isMe) btn.disabled=true;
+      btn.title=isMe
+        ?`【本人】${bk.title} (${bk.start}–${bk.end})  点击取消`
+        :`【${bk.booker||'他人'}】${bk.title} (${bk.start}–${bk.end})`;
+      if(bk.start===slotS){
+        const cnt=(sm(bk.end)-sm(bk.start))/30;
+        const bar=document.createElement('div');
+        bar.className='bk-bar '+(isMe?'mine-bar':'other-bar');
+        bar.style.cssText=`width:${cnt*36-4}px;left:2px;top:6px;bottom:6px;position:absolute`;
+        bar.textContent=bk.title;
         btn.appendChild(bar);
       }
-
-      if(isMe) btn.onclick = () => confirmDel(bk.id);
+      if(isMe) btn.onclick=()=>confirmDel(bk.id);
     } else {
-      btn.className = 'slot free';
-      btn.title = `预定 ${slotS}–${slotE}`;
-      btn.onclick = () => openBookModal(date, slotS, slotE);
+      btn.className='slot free';
+      btn.title=`预定 ${slotS}–${slotE}`;
+      btn.onclick=()=>openBookModal(date,slotS,slotE);
     }
 
     td.appendChild(btn);
     tr.appendChild(td);
   }
-
   tbody.appendChild(tr);
 }
 
 // ── 时间下拉 ──
 function fillTimeSelects(){
-  const ss = $('mStart'), se = $('mEnd');
-  ss.innerHTML = ''; se.innerHTML = '';
-  SLOTS.slice(0,-1).forEach(t => ss.appendChild(new Option(t, t)));
-  SLOTS.slice(1).forEach(t => se.appendChild(new Option(t, t)));
-  ss.value = '09:00'; se.value = '10:00';
+  const ss=$('mStart'),se=$('mEnd');
+  ss.innerHTML=''; se.innerHTML='';
+  SLOTS.slice(0,-1).forEach(t=>ss.appendChild(new Option(t,t)));
+  SLOTS.slice(1).forEach(t=>se.appendChild(new Option(t,t)));
+  ss.value='09:00'; se.value='10:00';
 }
 function autoEnd(){
-  const si = SLOTS.indexOf($('mStart').value);
-  $('mEnd').value = SLOTS[Math.min(si+2, SLOTS.length-1)];
+  const si=SLOTS.indexOf($('mStart').value);
+  $('mEnd').value=SLOTS[Math.min(si+2,SLOTS.length-1)];
 }
 
 // ── 打开预约弹窗 ──
-let _pendingBook = null; // 暂存待预约参数
-
-function openBookModal(date, start, end){
+function openBookModal(date,start,end){
   if(!getUser()){
-    // 没有姓名 → 先弹引导浮窗，记住参数
-    _pendingBook = { date, start, end };
-    $('nameGuideInput').value = '';
-    $('nameGuide').classList.add('open');
-    setTimeout(()=>$('nameGuideInput').focus(), 200);
+    showNameGuide(true, ()=>openBookModal(date,start,end));
     return;
   }
-  _doOpenBookModal(date, start, end);
-}
-
-function confirmNameAndBook(){
-  const n = $('nameGuideInput').value.trim();
-  if(!n){ $('nameGuideInput').style.borderColor='#dc2626'; $('nameGuideInput').focus(); return; }
-  $('nameGuideInput').style.borderColor='';
-  setUser(n);
-  $('nameInput').value = n;
-  updateAvatar();
-  $('nameGuide').classList.remove('open');
-  // 高亮右上角输入框反馈
-  $('nameInput').classList.add('highlight');
-  setTimeout(()=>$('nameInput').classList.remove('highlight'), 2200);
-  // 清除暂存参数，回到页面，下次点格子再弹预约窗
-  _pendingBook = null;
-  toast('姓名已保存，请点击时间格开始预定', 'ok');
-}
-
-// 回车确认
-document.addEventListener('keydown', e=>{
-  if(e.key==='Enter' && $('nameGuide').classList.contains('open')) confirmNameAndBook();
-});
-
-function _doOpenBookModal(date, start, end){
-  $('mDate').value = date;
-  $('mStart').value = start;
-  const si = SLOTS.indexOf(start);
-  $('mEnd').value = SLOTS[Math.min(si+2, SLOTS.length-1)];
-  $('mTitle').value = ''; $('mCount').value = ''; $('mNote').value = '';
-  $('bookInfo').textContent = '2815 · ' + fmtD(date) + ' · ' + start + ' 起';
+  $('mDate').value=date;
+  $('mStart').value=start;
+  const si=SLOTS.indexOf(start);
+  $('mEnd').value=SLOTS[Math.min(si+2,SLOTS.length-1)];
+  $('mTitle').value=''; $('mCount').value=''; $('mNote').value='';
+  $('bookInfo').textContent='2815 · '+fmtD(date)+' · '+start+' 起';
   openM('bookModal');
-  setTimeout(()=>$('mTitle').focus(), 150);
+  setTimeout(()=>$('mTitle').focus(),150);
 }
 
 // ── 提交预约 ──
-async function doBook(){
-  const user = getUser();
-  if(!user){ toast('请先填写姓名', 'err'); return; }
-  const date = $('mDate').value;
-  const start = $('mStart').value;
-  const end = $('mEnd').value;
-  const title = $('mTitle').value.trim();
-  if(!date){ toast('请选择日期', 'err'); return; }
-  if(!title){ toast('请填写会议主题', 'err'); return; }
-  if(sm(start) >= sm(end)){ toast('结束时间须晚于开始时间', 'err'); return; }
-  if(sm(end) - sm(start) > 240){ toast('单次预定不超过 4 小时', 'err'); return; }
-
-  const all = loadBks();
-  if(all.find(b => b.date===date && overlaps(start,end,b.start,b.end))){
-    toast('该时间段已被预定，请换时间', 'err'); return;
+function doBook(){
+  const user=getUser();
+  if(!user){ toast('请先登录','err'); return; }
+  const date=$('mDate').value;
+  const start=$('mStart').value;
+  const end=$('mEnd').value;
+  const title=$('mTitle').value.trim();
+  if(!title){ toast('请填写会议主题','err'); return; }
+  if(sm(start)>=sm(end)){ toast('结束时间须晚于开始时间','err'); return; }
+  if(sm(end)-sm(start)>240){ toast('单次预定不超过 4 小时','err'); return; }
+  if(_bks.find(b=>b.date===date&&overlaps(start,end,b.start,b.end))){
+    toast('该时间段已被预定，请换时间','err'); return;
   }
 
-  const bk = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+  const bk={
+    id: Date.now().toString(36)+Math.random().toString(36).slice(2,5),
     date, start, end, title,
-    count: $('mCount').value || '',
+    count: $('mCount').value||'',
     note: $('mNote').value.trim(),
     booker: user,
     createdAt: new Date().toISOString()
   };
+
+  // 立即更新本地 + 渲染
+  _bks.push(bk);
   closeM('bookModal');
-  toast('⏳ 提交中...', '');
-  await saveBk(bk);
-  toast('✅ 预定成功！' + start + '–' + end, 'ok');
   renderTimeline();
+  toast('✅ 预定成功！'+start+'–'+end,'ok');
+
+  // 后台写 Firebase
+  fbSave(bk);
 }
 
-// ── 取消确认 ──
+// ── 取消预约 ──
 function confirmDel(id, afterCb){
-  const bk = loadBks().find(b => b.id===id);
+  const bk=_bks.find(b=>b.id===id);
   if(!bk) return;
-  $('delTitle').textContent = '取消预约';
-  $('delBody').innerHTML = `
+  $('delTitle').textContent='取消预约';
+  $('delBody').innerHTML=`
     <p style="margin-bottom:12px;color:#374151">确定要取消以下预约？</p>
     <div style="background:#f9fafb;border-radius:7px;padding:11px 14px;font-size:13px;line-height:2;border:1px solid #e5e7eb">
       <strong>${bk.title}</strong><br>
       2815 &nbsp; ${fmtD(bk.date)}<br>
       ${bk.start} – ${bk.end}
-      ${bk.booker ? '<br><span style="color:#9ca3af">预约人：'+bk.booker+'</span>' : ''}
+      ${bk.booker?'<br><span style="color:#9ca3af">预约人：'+bk.booker+'</span>':''}
     </div>`;
-  $('delFoot').innerHTML = `
+  $('delFoot').innerHTML=`
     <button class="btn-ghost" onclick="closeM('delModal')">再想想</button>
     <button class="btn-danger" id="delConfBtn">确认取消</button>`;
-  $('delConfBtn').onclick = async ()=>{
-    await removeBk(id);
+  $('delConfBtn').onclick=()=>{
+    const fbKey=bk._fbKey;
+    // 立即本地删除 + 渲染
+    _bks=_bks.filter(b=>b.id!==id);
     closeM('delModal');
-    toast('预约已取消', 'ok');
     renderTimeline();
     if($('tab-mine').style.display!=='none') renderMine();
+    toast('预约已取消','ok');
+    // 后台删 Firebase
+    fbDel(fbKey);
     if(afterCb) afterCb();
   };
   openM('delModal');
@@ -781,20 +741,20 @@ function confirmDel(id, afterCb){
 
 // ── 我的预约 ──
 function renderMine(){
-  const user = getUser();
-  const all = loadBks().filter(b => b.booker===user)
-    .sort((a,b) => (a.date+a.start) > (b.date+b.start) ? 1 : -1);
-  const tbody = $('myBody');
-  tbody.innerHTML = '';
-  $('myEmpty').style.display = all.length ? 'none' : 'block';
-  const today = todayStr(), now = nowHHMM();
-  all.forEach(bk => {
-    let cls='tag-up', txt='即将';
-    if(bk.date < today || (bk.date===today && bk.end<=now)){ cls='tag-dn'; txt='已结束'; }
-    else if(bk.date === today){ cls='tag-td'; txt='今天'; }
-    const past = cls==='tag-dn';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
+  const user=getUser();
+  const all=_bks.filter(b=>b.booker===user)
+    .sort((a,b)=>(a.date+a.start)>(b.date+b.start)?1:-1);
+  const tbody=$('myBody');
+  tbody.innerHTML='';
+  $('myEmpty').style.display=all.length?'none':'block';
+  const today=todayStr(), now=nowHHMM();
+  all.forEach(bk=>{
+    let cls='tag-up',txt='即将';
+    if(bk.date<today||(bk.date===today&&bk.end<=now)){cls='tag-dn';txt='已结束';}
+    else if(bk.date===today){cls='tag-td';txt='今天';}
+    const past=cls==='tag-dn';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
       <td><strong>${bk.title}</strong>${bk.note?'<br><span style="font-size:11px;color:#9ca3af">'+bk.note+'</span>':''}</td>
       <td>${fmtD(bk.date)}</td>
       <td>${bk.start} – ${bk.end}</td>
@@ -806,25 +766,24 @@ function renderMine(){
 
 // ── 扫码到场 ──
 function showWalkIn(){
-  const today = todayStr(), now = nowHHMM();
-  const nowMin = sm(now);
-  const bks = loadBks().filter(b => b.date===today);
-  const curBk = bks.find(b => sm(b.start)<=nowMin && nowMin<sm(b.end));
-  const body = $('walkInBody'), foot = $('walkInFoot');
-
+  const today=todayStr(), now=nowHHMM();
+  const nowMin=sm(now);
+  const bks=_bks.filter(b=>b.date===today);
+  const curBk=bks.find(b=>sm(b.start)<=nowMin&&nowMin<sm(b.end));
+  const body=$('walkInBody'),foot=$('walkInFoot');
   if(!curBk){
-    body.innerHTML = `
+    body.innerHTML=`
       <div style="text-align:center;padding:12px 0">
         <div style="font-size:36px;margin-bottom:10px">🟢</div>
         <div style="font-size:16px;font-weight:700;color:#15803d;margin-bottom:6px">当前空闲，可以使用</div>
         <div style="font-size:13px;color:#9ca3af">现在是 ${now}</div>
       </div>`;
-    const ns = nextFreeSlot(now);
-    foot.innerHTML = `
+    const ns=nextFreeSlot(now);
+    foot.innerHTML=`
       <button class="btn-ghost" onclick="closeM('walkInModal')">只是看看</button>
       <button class="btn-primary" onclick="closeM('walkInModal');openBookModal('${today}','${ns}','${nextFreeSlot(now,2)}')">立即预定 →</button>`;
   } else {
-    body.innerHTML = `
+    body.innerHTML=`
       <div style="text-align:center;padding:8px 0 12px">
         <div style="font-size:34px;margin-bottom:8px">🔴</div>
         <div style="font-size:15px;font-weight:700;color:#dc2626;margin-bottom:4px">当前时段已被预约</div>
@@ -835,7 +794,7 @@ function showWalkIn(){
         时间：${curBk.start} – ${curBk.end}<br><br>
         ⚠️ 若您发现会议室<strong>实际无人使用</strong>，可申请取消此预约并重新预定。
       </div>`;
-    foot.innerHTML = `
+    foot.innerHTML=`
       <button class="btn-ghost" onclick="closeM('walkInModal')">离开</button>
       <button class="btn-danger" onclick="walkInCancel('${curBk.id}')">申请取消并重新预定</button>`;
   }
@@ -843,19 +802,19 @@ function showWalkIn(){
 }
 
 function walkInCancel(bkId){
-  const bk = loadBks().find(b=>b.id===bkId);
+  const bk=_bks.find(b=>b.id===bkId);
   if(!bk){ toast('预约不存在或已取消','err'); closeM('walkInModal'); return; }
   closeM('walkInModal');
-  confirmDel(bkId, ()=>{
-    const today=todayStr(), now=nowHHMM();
-    openBookModal(today, nextFreeSlot(now), nextFreeSlot(now,2));
+  confirmDel(bkId,()=>{
+    const today=todayStr(),now=nowHHMM();
+    openBookModal(today,nextFreeSlot(now),nextFreeSlot(now,2));
   });
 }
 
-function nextFreeSlot(hhMM, offset=0){
-  const min = sm(hhMM);
-  const idx = SLOTS.findIndex(s=>sm(s)>=min);
-  return SLOTS[Math.max(0, Math.min(idx+offset, SLOTS.length-2))];
+function nextFreeSlot(hhMM,offset=0){
+  const min=sm(hhMM);
+  const idx=SLOTS.findIndex(s=>sm(s)>=min);
+  return SLOTS[Math.max(0,Math.min(idx+offset,SLOTS.length-2))];
 }
 </script>
 </body>
