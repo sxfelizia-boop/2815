@@ -345,15 +345,14 @@ textarea.mi{resize:vertical;min-height:56px}
 <div class="name-guide-bg" id="nameGuide">
   <div class="name-guide">
     <div class="name-guide-icon">👤</div>
-    <h3 id="nameGuideTitle">填写您的企业微信名称</h3>
+    <h3 id="nameGuideTitle">填写您的英文名</h3>
     <div class="name-guide-warn">
-      ⚠️ <strong>重要提示</strong>：请填写您的<strong>企业微信名称</strong>，格式必须为：<br>
-      <code>英文名(中文名)</code>，例如 <code>winstonqi(祁宁)</code><br>
+      ⚠️ <strong>重要提示</strong>：请填写您的<strong>英文名</strong>，例如 <code>zhangsan</code><br>
       该名称将作为您的<strong>唯一身份标识</strong>，用于管理您的预约。<br>
-      换设备或重新登录时，填写相同名称即可找回所有预约。
+      换设备或重新登录时，填写<strong>相同英文名</strong>即可找回所有预约。
     </div>
-    <input class="name-guide-input" id="nameGuideInput" type="text" placeholder="如：winstonqi(祁宁)" maxlength="40" autocomplete="off">
-    <div class="name-guide-fmt" id="nameGuideFmt">格式：英文名(中文名) &nbsp;·&nbsp; 括号内为中文姓名</div>
+    <input class="name-guide-input" id="nameGuideInput" type="text" placeholder="如：zhangsan" maxlength="40" autocomplete="off">
+    <div class="name-guide-fmt" id="nameGuideFmt">仅限英文字母，如 zhangsan、winstonqi</div>
     <button class="btn-primary" style="width:100%;padding:11px;font-size:14px" onclick="confirmName()">确认登录</button>
   </div>
 </div>
@@ -385,9 +384,9 @@ function fmtD(ds){ const d=new Date(ds+'T00:00:00'); return (d.getMonth()+1)+'�
 function fmtDate(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
 const $ = id => document.getElementById(id);
 
-// ── 用户名格式校验：英文字母/数字(任意中文) ──
+// ── 用户名格式校验：纯英文字母 ──
 function validName(n){
-  return /^[a-zA-Z0-9]+\(.+\)$/.test(n.trim());
+  return /^[a-zA-Z]+$/.test(n.trim());
 }
 
 // ── 用户 ──
@@ -504,7 +503,7 @@ function showNameGuide(required, cb){
   if(required){
     $('nameGuideTitle').textContent = '填写您的企业微信名称';
   } else {
-    $('nameGuideTitle').textContent = getUser() ? '切换账号' : '填写您的企业微信名称';
+    $('nameGuideTitle').textContent = getUser() ? '切换账号' : '填写您的英文名';
   }
   openM('nameGuide');
   setTimeout(()=>$('nameGuideInput').focus(), 200);
@@ -521,7 +520,7 @@ function confirmName(){
   if(!validName(n)){
     $('nameGuideInput').classList.add('err');
     $('nameGuideFmt').style.color='#dc2626';
-    $('nameGuideFmt').textContent='格式不对！必须是：英文名(中文名)，如 winstonqi(祁宁)';
+    $('nameGuideFmt').textContent='格式不对！只能输入英文字母，如 zhangsan';
     $('nameGuideInput').focus(); return;
   }
   setUser(n);
